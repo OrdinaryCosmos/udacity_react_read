@@ -1,0 +1,10 @@
+export const LOADCATEGORY = "loadcatergory";
+export const CHANGEPOST = "loadallposts";
+export const GETPOSTSOFCATEGORY = "getpostsofacategory";
+export const CURRENTPOST = "getcurrentpost";
+export const CURRENTCOMMENT = "getpostsofacategory";
+export const UPDATEVOTEWITHID = "updatevotewithID";
+export const UPDATECURRENTPOST = "updatecurreentPostVotew";
+export const SORTPOST = "sortpost";
+export const UPDATECOMMENT = "update comment";
+export const ADDNEWCOMMENT = "add new comment";
