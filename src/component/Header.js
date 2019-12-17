@@ -20,24 +20,20 @@ class Header extends Component {
   render() {
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Udacity</Navbar.Brand>
+        <Navbar.Brand href="/">Udacity News</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             {this.props.categories.map(cate => (
               <Nav.Link><Link to={`/catergory/${cate}`}> {cate}</Link></Nav.Link>
             ))}
-            <NavDropdown title="Sort By" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            </NavDropdown>
           </Nav>
-          <Button variant="primary" size="sm">
-            New Post <Badge variant="light">+</Badge>
-            <span className="sr-only">add new post</span>
-          </Button>
+          <Link to="/edit">
+            <Button variant="primary" size="sm">
+              New Post <Badge variant="light">+</Badge>
+              <span className="sr-only">add new post</span>
+            </Button>
+          </Link>
         </Navbar.Collapse>
       </Navbar>
     );

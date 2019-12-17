@@ -9,6 +9,8 @@ import { changeSort } from "../action_creators";
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 
 class Root extends Component {
@@ -44,45 +46,37 @@ class Root extends Component {
 
 
   render() {
+
+    const sortHash = {
+      "timestamp lowToHigh": "published time - old to new",
+      "timestamp highToLow": "published time - new to old",
+      "voteScore lowToHigh": "vote score - low to high",
+      "voteScore highToLow": "vote score - high to low"
+    }
     return (
       <Container>
         <Header />
+
+        <Row>
+          Sort by:
+            <DropdownButton style={{ display: "inline-block" }} size="sm" variant="secondary" id="dropdown-item-button" title={sortHash[this.state.sortOrder]}>
+            {Object.keys(sortHash).map(item => <Dropdown.Item as="button" onClick={e => { this.setState({ sortOrder: item }) }}>{sortHash[item]}</Dropdown.Item>)}
+          </DropdownButton>
+        </Row>
         <div>
-          <div>
-            <select
-              onChange={e => {
-                this.setState({ sortOrder: e.target.value });
-              }}
-              value={this.state.sortOrder}
-            >
-              <option value="timestamp lowToHigh">
-                published time: from old to new
-              </option>
-              <option value="timestamp highToLow">
-                published time: from new to order
-              </option>
-              <option value="voteScore lowToHigh">
-                vote score:from low to high
-              </option>
-              <option value="voteScore highToLow">
-                vote score:from high to low
-              </option>
-            </select>
-          </div>
-          <ol>
-            {this.props.posts
-              .filter(post => post.deleted === false)
-              .sort((a, b) => {
-                const [accordingTo, order] = this.state.sortOrder.split(" ");
-                return order === "lowToHigh"
-                  ? a[accordingTo] - b[accordingTo]
-                  : b[accordingTo] - a[accordingTo];
-              })
-              .map(post => (
-                <PostListItem post={post} />
-              ))}
-          </ol>
+          {this.props.posts
+            .filter(post => post.deleted === false)
+            .sort((a, b) => {
+              const [accordingTo, order] = this.state.sortOrder.split(" ");
+              return order === "lowToHigh"
+                ? a[accordingTo] - b[accordingTo]
+                : b[accordingTo] - a[accordingTo];
+            })
+            .map(post => (
+              <PostListItem post={post} />
+            ))}
         </div>
+
       </Container>
     );
   }

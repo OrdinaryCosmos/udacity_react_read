@@ -4,13 +4,16 @@ import axios from "axios";
 import uuid from "uuid/v1";
 import { Link } from "react-router-dom";
 import { getCategories } from "../action_creators";
+import Container from "react-bootstrap/Container";
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 export class Edit extends Component {
   componentDidMount() {
     console.log(this.props.categories);
-
-    if (this.props.categories.length === 0) {
+    if (this.props.categories.length === 0) {// if this is the first page user lands on, the catergories have not been loaded yet.
       console.log("edit_component_did_mount");
-
       this.props.getCategories();
     }
   }
@@ -83,46 +86,53 @@ export class Edit extends Component {
     }));
   };
 
-  selectRef = createRef("");
+  selectRef = createRef("");// according to the rubric, we are not supposed to change the category of each post, so there is no need to set it as a controlled input. ref will do the trick
 
   render() {
     const { curr_post } = this.state;
     return (
-      <div>
-        <Link to="/">
-          <h4>Udaicty News</h4>
-        </Link>
+      <Container>
 
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="title">Title</label>
-          {curr_post.id && (
-            <button onClick={this.deletePost}>delete the post</button>
-          )}
-          <input
-            type="text"
-            name="title"
-            value={curr_post.title}
-            onChange={this.titleChange}
-          />
+        <Row>
+          <Link to="/">
+            <h4>Udaicty News</h4>
+          </Link>
+        </Row>
+
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group>
+            <Form.Label htmlFor="title">Title:</Form.Label>
+            {curr_post.id && (
+              <button onClick={this.deletePost}>delete the post</button>
+            )}
+            <Form.Control
+              type="text"
+              name="title"
+              value={curr_post.title}
+              onChange={this.titleChange}
+            />
+          </Form.Group>
           {curr_post.category || (
-            <div>
-              <label htmlFor="category">Category</label>
-              <select name="catergory" ref={this.selectRef}>
+            <Form.Group>
+              <Form.Label htmlFor="category">Category</Form.Label>
+              <Form.Control as="select" name="catergory" ref={this.selectRef}>
                 {this.props.categories.map(categ => (
                   <option value={categ}>{categ}</option>
                 ))}
-              </select>
-            </div>
+              </Form.Control>
+            </Form.Group>
           )}
-          <label htmlFor="post-body">Body:</label>
-          <textarea
-            name="post-body"
-            value={curr_post.body}
-            onChange={this.bodyChange}
-          />
-          ><button>submit the post</button>
-        </form>
-      </div>
+          <Form.Group>
+            <Form.Label htmlFor="post-body">Body:</Form.Label>
+            <Form.Control as="textarea"
+              name="post-body"
+              value={curr_post.body}
+              onChange={this.bodyChange}
+            />
+          </Form.Group>
+          <Button>submit the post</Button>
+        </Form>
+      </Container>
     );
   }
 }
