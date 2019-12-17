@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 export class Edit extends Component {
   componentDidMount() {
     console.log(this.props.categories);
@@ -26,6 +27,7 @@ export class Edit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log("submit is called")
     if (typeof this.state.curr_post.id === "undefined") {
       const newpost = {
         ...this.state.curr_post,
@@ -84,7 +86,9 @@ export class Edit extends Component {
     this.setState(prevS => ({
       curr_post: { ...prevS.curr_post, body: newbody }
     }));
+
   };
+  
 
   selectRef = createRef("");// according to the rubric, we are not supposed to change the category of each post, so there is no need to set it as a controlled input. ref will do the trick
 
@@ -92,19 +96,23 @@ export class Edit extends Component {
     const { curr_post } = this.state;
     return (
       <Container>
-
         <Row>
-          <Link to="/">
+          <Link  to="/">
             <h4>Udaicty News</h4>
           </Link>
         </Row>
 
-        <Form onSubmit={this.handleSubmit}>
+        <ButtonToolbar>
+          <Button  style={{ marginRight: "5px" }} variant={"danger"} onClick={this.deletePost}>Delete this Post</Button>
+          <Link to={`/post/${curr_post.id}`}>
+            <Button variant={"warning"} >Cancel the Change</Button>
+          </Link>
+
+        </ButtonToolbar>
+
+        <Form>
           <Form.Group>
             <Form.Label htmlFor="title">Title:</Form.Label>
-            {curr_post.id && (
-              <button onClick={this.deletePost}>delete the post</button>
-            )}
             <Form.Control
               type="text"
               name="title"
@@ -130,7 +138,7 @@ export class Edit extends Component {
               onChange={this.bodyChange}
             />
           </Form.Group>
-          <Button>submit the post</Button>
+          <Button onClick={this.handleSubmit}>submit the post</Button>
         </Form>
       </Container>
     );

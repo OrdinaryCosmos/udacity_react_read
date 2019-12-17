@@ -23,9 +23,7 @@ export class PostListItem extends Component {
                 }}
               />
             </Col>
-
             <Col xs="12" style={{ textAlign: "center" }} >{post.voteScore}</Col>
-
             <Col xs="12" style={{ textAlign: "center" }} >
               <MdArrowDropdownCircle
                 color="red"
@@ -35,7 +33,6 @@ export class PostListItem extends Component {
               />
             </Col>
           </Row>
-
         </Col>
 
         <Col md="6">

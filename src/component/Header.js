@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import { LOADCATEGORY, SORTPOST } from "../actions";
 import { getCategories } from "../action_creators";
@@ -25,7 +25,7 @@ class Header extends Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             {this.props.categories.map(cate => (
-              <Nav.Link><Link to={`/catergory/${cate}`}> {cate}</Link></Nav.Link>
+              <Nav.Link><NavLink activeClassName="active_link" to={`/catergory/${cate}`}> {cate}</NavLink></Nav.Link>
             ))}
           </Nav>
           <Link to="/edit">

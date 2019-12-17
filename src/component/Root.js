@@ -46,7 +46,6 @@ class Root extends Component {
 
 
   render() {
-
     const sortHash = {
       "timestamp lowToHigh": "published time - old to new",
       "timestamp highToLow": "published time - new to old",

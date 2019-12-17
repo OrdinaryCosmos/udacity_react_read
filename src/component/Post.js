@@ -6,6 +6,16 @@ import { CURRENTPOST, CURRENTCOMMENT, ADDNEWCOMMENT } from "../actions";
 import { Link } from "react-router-dom";
 import { vote } from "../action_creators";
 import uuid from 'uuid/v1'
+import moduleName from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import MdArrowDropupCircle from "react-ionicons/lib/MdArrowDropupCircle";
+import MdArrowDropdownCircle from "react-ionicons/lib/MdArrowDropdownCircle";
+
+
 
 export class Post extends Component {
   componentDidMount() {
@@ -23,49 +33,68 @@ export class Post extends Component {
     const { curr_post, comments, vote } = this.props;
 
     return (
-      <div>
+      <Container>
+
         <Link to="/">
           <h4>Udaicty News</h4>
         </Link>
-        <h4>post detail page </h4>
-        <div>
-          <button
-            onClick={e => {
-              vote("up", curr_post.id);
-            }}
-          >
-            up
-          </button>
-          <span>{curr_post.voteScore}</span>
-          <button
-            onClick={e => {
-              vote("down", curr_post.id);
-            }}
-          >
-            down
-          </button>
-        </div>
-        <h4>{curr_post.title}</h4>
-        <Link to={{ pathname: "/edit", state: { curr_post: curr_post } }}>
-          <button>Edit</button>
-        </Link>
-        <p>{curr_post.author}</p>
-        <p>{curr_post.body}</p>
-        <p> comments:{comments.length}</p>
-        <div>
-          {comments.map(comment => (
-            <CommentItem comment={comment} />
-          ))}
-        </div>
-        <div>
-          <button onClick={e => this.setState({ newCommentBody: "" })}>clear</button>
-          <textarea value={this.state.newCommentBody} onChange={e => { this.setState({ newCommentBody: e.target.value }) }} />
-          <button onClick={e => {
-            this.setState({ newCommentBody: "" });
-            this.props.addNewComment({ id: uuid(), timestamp: Date.now(), body: this.state.newCommentBody, author: "Anonymous", parentId: curr_post.id }, () => { this.setState({ newCommentBody: "" }) })
-          }}>add new comment</button>
-        </div>
-      </div>
+        <Row>
+          <Col xs="2" md="1">
+            <Row>
+              <Col xs="12" style={{ textAlign: "center" }} >
+                <MdArrowDropupCircle
+                  color="green"
+                  onClick={e => {
+                    vote("up", curr_post.id);
+                  }}
+                />
+              </Col>
+              <Col xs="12" style={{ textAlign: "center" }} >{curr_post.voteScore}</Col>
+              <Col xs="12" style={{ textAlign: "center" }} >
+                <MdArrowDropdownCircle
+                  color="red"
+                  onClick={e => {
+                    vote("down", curr_post.id);
+                  }}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col>
+            <h5>{curr_post.title}</h5>
+
+            <p>by: {curr_post.author}</p>
+          </Col>
+          <Col>
+            <Link to={{ pathname: "/edit", state: { curr_post: curr_post } }}>
+              <Button variant="outline-info">Edit the post </Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row style={{ margin: '10px', }} >
+          <Col xs={12} style={{ backgroundColor: "#e6efff" }}><p>{curr_post.body}</p></Col>
+          <Col xs={12}>
+            <p> comments:{comments.length}</p>
+            <div>
+              {comments.map(comment => (
+                <CommentItem comment={comment} />
+              ))}
+            </div>
+          </Col>
+        </Row>
+
+
+
+        <Row>
+          <Col sm={{ span: 10, offset: 1 }} >
+            <textarea style={{ width: "100%" }} value={this.state.newCommentBody} onChange={e => { this.setState({ newCommentBody: e.target.value }) }} />
+            <Button block onClick={e => {
+              this.setState({ newCommentBody: "" });
+              this.props.addNewComment({ id: uuid(), timestamp: Date.now(), body: this.state.newCommentBody, author: "Anonymous", parentId: curr_post.id }, () => { this.setState({ newCommentBody: "" }) })
+            }}>add new comment</Button>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
