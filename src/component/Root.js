@@ -1,14 +1,13 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { CHANGEPOST } from "../actions";
 import { connect } from "react-redux";
 import Header from "./Header";
 import PostListItem from "./PostListItem";
-import { Link } from "react-router-dom";
-import { changeSort } from "../action_creators";
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
@@ -21,6 +20,8 @@ class Root extends Component {
         params: { selectC }
       }
     } = this.props;
+    console.log("sec", selectC);
+
     if (typeof selectC === "undefined") {
       // the catergory is not specified, so show all the posts
       this.props.getAllPost();
@@ -59,7 +60,7 @@ class Root extends Component {
         <Row>
           Sort by:
             <DropdownButton style={{ display: "inline-block" }} size="sm" variant="secondary" id="dropdown-item-button" title={sortHash[this.state.sortOrder]}>
-            {Object.keys(sortHash).map(item => <Dropdown.Item as="button" onClick={e => { this.setState({ sortOrder: item }) }}>{sortHash[item]}</Dropdown.Item>)}
+            {Object.keys(sortHash).map(item => <Dropdown.Item as="button" key={item} onClick={e => { this.setState({ sortOrder: item }) }}>{sortHash[item]}</Dropdown.Item>)}
           </DropdownButton>
         </Row>
         <div>
@@ -72,7 +73,7 @@ class Root extends Component {
                 : b[accordingTo] - a[accordingTo];
             })
             .map(post => (
-              <PostListItem post={post} />
+              <PostListItem key={post.id} post={post} />
             ))}
         </div>
 

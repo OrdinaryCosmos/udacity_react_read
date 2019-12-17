@@ -1,21 +1,18 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import CommentItem from "./CommentItem";
 import { CURRENTPOST, CURRENTCOMMENT, ADDNEWCOMMENT } from "../actions";
+import Header from "./Header";
 import { Link } from "react-router-dom";
 import { vote } from "../action_creators";
 import uuid from 'uuid/v1'
-import moduleName from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import MdArrowDropupCircle from "react-ionicons/lib/MdArrowDropupCircle";
 import MdArrowDropdownCircle from "react-ionicons/lib/MdArrowDropdownCircle";
-
-
 
 export class Post extends Component {
   componentDidMount() {
@@ -30,14 +27,12 @@ export class Post extends Component {
   state = { newCommentBody: "" }
 
   render() {
-    const { curr_post, comments, vote } = this.props;
-
+    const { curr_post, vote } = this.props;
+    const comments = this.props.comments.filter(comm => !comm.deleted)
     return (
       <Container>
 
-        <Link to="/">
-          <h4>Udaicty News</h4>
-        </Link>
+        <Header></Header>
         <Row>
           <Col xs="2" md="1">
             <Row>
@@ -77,7 +72,7 @@ export class Post extends Component {
             <p> comments:{comments.length}</p>
             <div>
               {comments.map(comment => (
-                <CommentItem comment={comment} />
+                <CommentItem key={comment.id} comment={comment} />
               ))}
             </div>
           </Col>

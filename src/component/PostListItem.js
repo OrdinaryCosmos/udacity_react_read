@@ -36,7 +36,7 @@ export class PostListItem extends Component {
         </Col>
 
         <Col md="6">
-          <div className="text-wrap" style={{ fontSize: "20px", fontWeight: "bold" }}><Link to={`/post/${post.id}`}>{post.title}</Link></div>
+          <div className="text-wrap" style={{ fontSize: "20px", fontWeight: "bold" }}><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></div>
           <div>by:{post.author}  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; published on: {new Date(post.timestamp).toLocaleDateString()}</div>
         </Col>
 

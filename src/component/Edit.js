@@ -4,9 +4,11 @@ import axios from "axios";
 import uuid from "uuid/v1";
 import { Link } from "react-router-dom";
 import { getCategories } from "../action_creators";
+import Header from './Header'
+
 import Container from "react-bootstrap/Container";
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+// import Row from 'react-bootstrap/Row'
+// import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
@@ -88,7 +90,7 @@ export class Edit extends Component {
     }));
 
   };
-  
+
 
   selectRef = createRef("");// according to the rubric, we are not supposed to change the category of each post, so there is no need to set it as a controlled input. ref will do the trick
 
@@ -96,14 +98,12 @@ export class Edit extends Component {
     const { curr_post } = this.state;
     return (
       <Container>
-        <Row>
-          <Link  to="/">
-            <h4>Udaicty News</h4>
-          </Link>
-        </Row>
+
+        <Header />
+
 
         <ButtonToolbar>
-          <Button  style={{ marginRight: "5px" }} variant={"danger"} onClick={this.deletePost}>Delete this Post</Button>
+          <Button style={{ marginRight: "5px" }} variant={"danger"} onClick={this.deletePost}>Delete this Post</Button>
           <Link to={`/post/${curr_post.id}`}>
             <Button variant={"warning"} >Cancel the Change</Button>
           </Link>
@@ -125,7 +125,7 @@ export class Edit extends Component {
               <Form.Label htmlFor="category">Category</Form.Label>
               <Form.Control as="select" name="catergory" ref={this.selectRef}>
                 {this.props.categories.map(categ => (
-                  <option value={categ}>{categ}</option>
+                  <option key={categ} value={categ}>{categ}</option>
                 ))}
               </Form.Control>
             </Form.Group>

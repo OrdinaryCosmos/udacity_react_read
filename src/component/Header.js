@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import axios from "axios";
-import { LOADCATEGORY, SORTPOST } from "../actions";
+
 import { getCategories } from "../action_creators";
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import NavDropdown from 'react-bootstrap/NavDropdown'
+
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 
@@ -25,7 +23,7 @@ class Header extends Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             {this.props.categories.map(cate => (
-              <Nav.Link><NavLink activeClassName="active_link" to={`/catergory/${cate}`}> {cate}</NavLink></Nav.Link>
+              <NavLink key={cate} style={{ margin: "0 5px" }} activeClassName="active_link" to={`/${cate}`}> {cate}</NavLink>
             ))}
           </Nav>
           <Link to="/edit">

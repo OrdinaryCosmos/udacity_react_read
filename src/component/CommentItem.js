@@ -1,7 +1,8 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { vote, updateComment } from "../action_creators";
+
+import { voteComment, updateComment, deleteComment } from "../action_creators";
+
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
@@ -9,12 +10,12 @@ import MdArrowDropdownCircle from 'react-ionicons/lib/MdArrowDropdownCircle'
 import MdArrowDropupCircle from 'react-ionicons/lib/MdArrowDropupCircle'
 
 export class CommentItem extends Component {
-  state = { showEdit: false };
+  state = { changeComment: false };
   commentBody = createRef(this.props.comment.body);
 
+
   render() {
-    const { comment } = this.props;
-    console.log("props", this.props);
+    const { comment, voteComment } = this.props;
 
     return (
       <Row style={{ borderBottomWidth: "1px", borderColor: "grey", borderBottomStyle: "solid", padding: "5px" }}>
@@ -24,7 +25,7 @@ export class CommentItem extends Component {
               <MdArrowDropupCircle
                 color="green"
                 onClick={e => {
-                  vote("up", comment.id);
+                  voteComment("up", comment.id);
                 }}
               />
             </Col>
@@ -33,13 +34,13 @@ export class CommentItem extends Component {
               <MdArrowDropdownCircle
                 color="red"
                 onClick={e => {
-                  vote("down", comment.id);
+                  voteComment("down", comment.id);
                 }}
               />
             </Col>
           </Row>
         </Col>
-        <Col sm="1"><span style={{ fontStyle: "oblique" }}>{comment.author}:</span></Col>
+        <Col sm="2"><span style={{ fontStyle: "oblique" }}>{comment.author}:</span></Col>
         {this.state.changeComment ? (
           <Col sm="5">
             <textarea ref={this.commentBody} defaultValue={comment.body} style={{ width: "100%" }} />
@@ -59,7 +60,7 @@ export class CommentItem extends Component {
             </Button>
           </Col>
         ) : (
-            <Col sm="5">
+            <Col sm="8">
               <span>{comment.body}</span>
               <Button size={"sm"} variant="outline-secondary" style={{ marginLeft: "10px" }}
                 onClick={e => {
@@ -67,6 +68,11 @@ export class CommentItem extends Component {
                 }}
               >
                 Edit the comment
+            </Button>
+              <Button size={"sm"} variant="outline-danger" style={{ marginLeft: "10px" }}
+                onClick={e => this.props.deleteComment(comment.id)}
+              >
+                Delete the comment
             </Button>
             </Col>
           )}
@@ -78,10 +84,14 @@ export class CommentItem extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  vote: (upOrDown, id) => dispatch(vote(upOrDown, id)),
+  voteComment: (upOrDown, id) => dispatch(voteComment(upOrDown, id)),
   updateComment: (cb, comment) => {
     dispatch(updateComment(cb, comment));
+  },
+  deleteComment: (commentid) => {
+    dispatch(deleteComment(commentid))
   }
+
 });
 
 export default connect(

@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -21,9 +21,8 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Route exact path="/" component={Root} />
-        <Route exact path="/catergory/:selectC" component={Root} />
-        <Route exact path="/post/:postid" component={Post} />
+        <Route exact path="/:selectC?" component={Root} />
+        <Route exact path="/:catergory/:postid" component={Post} />
         <Route exact path="/edit" component={Edit} />
         {/* <Route component={ NotFound } />    */}
       </Router>

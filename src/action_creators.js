@@ -2,10 +2,11 @@ import axios from "axios";
 import {
   LOADCATEGORY,
   UPDATEVOTEWITHID,
-  UPDATECURRENTPOST,
-  SORTPOST,
-  UPDATECOMMENT
+
+  UPDATECOMMENT,
+
 } from "./actions";
+
 
 export const getCategories = dispatch => {
   console.log("getcatergory is called");
@@ -32,27 +33,22 @@ export const vote = (upOrDown, id) => {
         dispatch({ type: UPDATEVOTEWITHID, payload: { upOrDown, id } });
       });
 };
+
+
 export const voteComment = (upOrDown, id) => {
   return dispatch =>
     axios
       .post(
-        `/posts/${id}`,
+        `/comments/${id}`,
         { option: upOrDown + "Vote" },
         { headers: { Authorization: "Bearer" } }
       )
       .then(resp => {
         console.log("voting result", resp);
-        dispatch({ type: UPDATEVOTEWITHID, payload: { upOrDown, id } });
+        dispatch({ type: UPDATECOMMENT, payload: resp.data });
       });
 };
 
-export const changeSort = e => {
-  return dispatch => {
-    console.log("this is select sort", e.target.value);
-    const [accordingTo, order] = e.target.value.split(" ");
-    dispatch({ type: SORTPOST, payload: { accordingTo, order } });
-  };
-};
 
 export const updateComment = (cb, comment) => {
   return dispatch => {
@@ -69,3 +65,16 @@ export const updateComment = (cb, comment) => {
       });
   };
 };
+
+
+export const deleteComment = (commentid) => {
+  return dispatch => {
+    axios.delete(`/comments/${commentid}`, { headers: { Authorization: "Bearer " } }).then((resp) => {
+      console.log();
+
+      dispatch({ type: UPDATECOMMENT, payload: resp.data })
+    }).catch((err) => {
+
+    });
+  }
+}

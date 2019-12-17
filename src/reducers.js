@@ -2,11 +2,9 @@ import { combineReducers } from "redux";
 import {
   LOADCATEGORY,
   CHANGEPOST,
-  GETPOSTSOFCATEGORY,
   CURRENTPOST,
   CURRENTCOMMENT,
   UPDATEVOTEWITHID,
-  UPDATECURRENTPOST,
   SORTPOST,
   UPDATECOMMENT,
   ADDNEWCOMMENT
@@ -58,7 +56,7 @@ const commentReducer = (state = [], action) => {
   switch (action.type) {
     case CURRENTCOMMENT:
       return action.payload;
-      break;
+
 
     case UPDATECOMMENT:
       let newstate = [];
@@ -73,9 +71,10 @@ const commentReducer = (state = [], action) => {
 
     case ADDNEWCOMMENT:
       return [...state, action.payload]
+
     default:
       return state;
-      break;
+
   }
 };
 
@@ -83,7 +82,7 @@ const currpostReducer = (state = {}, action) => {
   switch (action.type) {
     case CURRENTPOST:
       return action.payload;
-      break;
+
     case UPDATEVOTEWITHID:
       const { upOrDown, id } = action.payload;
       if (id === state.id) {
@@ -92,10 +91,14 @@ const currpostReducer = (state = {}, action) => {
           voteScore:
             upOrDown === "up" ? state.voteScore + 1 : state.voteScore - 1
         };
+      } else {
+        return state
       }
+
+
     default:
       return state;
-      break;
+
   }
 };
 
