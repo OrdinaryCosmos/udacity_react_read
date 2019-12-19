@@ -100,15 +100,14 @@ export class Edit extends Component {
       <Container>
 
         <Header />
-
-
-        <ButtonToolbar>
+        {typeof curr_post.id !== "undefined" && <ButtonToolbar>
           <Button style={{ marginRight: "5px" }} variant={"danger"} onClick={this.deletePost}>Delete this Post</Button>
           <Link to={`/post/${curr_post.id}`}>
             <Button variant={"warning"} >Cancel the Change</Button>
           </Link>
 
-        </ButtonToolbar>
+        </ButtonToolbar>}
+
 
         <Form>
           <Form.Group>

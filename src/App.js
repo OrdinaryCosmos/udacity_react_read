@@ -1,13 +1,14 @@
 import React from "react";
 
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import mainReducer from "./reducers";
 import Root from "./component/Root";
 import Post from "./component/Post";
 import Edit from "./component/Edit";
+import NotFound from "./component/NotFound";
 import ReduxThunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,10 +22,12 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Route exact path="/:selectC?" component={Root} />
-        <Route exact path="/:catergory/:postid" component={Post} />
-        <Route exact path="/edit" component={Edit} />
-        {/* <Route component={ NotFound } />    */}
+        <Switch>
+          <Route exact path="/edit" component={Edit} />
+          <Route exact path="/:selectC?" component={Root} />
+          <Route exact path="/:catergory/:postid" component={Post} />
+          <Route component={NotFound} />
+        </Switch>
       </Router>
     </Provider>
   );

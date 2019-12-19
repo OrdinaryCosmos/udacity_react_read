@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import MdArrowDropupCircle from "react-ionicons/lib/MdArrowDropupCircle";
 import MdArrowDropdownCircle from "react-ionicons/lib/MdArrowDropdownCircle";
+import NotFound from "./NotFound";
 
 export class Post extends Component {
   componentDidMount() {
@@ -30,7 +31,7 @@ export class Post extends Component {
     const { curr_post, vote } = this.props;
     const comments = this.props.comments.filter(comm => !comm.deleted)
     return (
-      <Container>
+      Object.keys(curr_post).length === 0 ? <NotFound /> : <Container>
 
         <Header></Header>
         <Row>
