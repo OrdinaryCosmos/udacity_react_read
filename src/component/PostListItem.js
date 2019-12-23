@@ -13,7 +13,7 @@ export class PostListItem extends Component {
 
     return (
       <Row style={{ borderBottomWidth: "1px", borderColor: "grey", borderBottomStyle: "solid", padding: "5px" }}>
-        <Col xs="2" md="1">
+        <Col xs={{ span: 2, offset: 2 }} md="1" >
           <Row>
             <Col xs="12" style={{ textAlign: "center" }} >
               <MdArrowDropupCircle
