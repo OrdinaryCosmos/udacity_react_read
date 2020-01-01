@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { vote } from "../action_creators";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import MdArrowDropdownCircle from "react-ionicons/lib/MdArrowDropdownCircle";
 import MdArrowDropupCircle from "react-ionicons/lib/MdArrowDropupCircle";
+import MdCreate from "react-ionicons/lib/MdCreate";
 
 export class PostListItem extends Component {
   render() {
@@ -18,7 +20,8 @@ export class PostListItem extends Component {
           borderColor: "grey",
           borderBottomStyle: "solid",
           padding: "5px",
-          margin: "5px"
+          margin: "5px",
+          alignItems: "center"
         }}
       >
         <Col sm="2">
@@ -63,7 +66,9 @@ export class PostListItem extends Component {
         </Col>
         <Col sm="1">
           <Link to={{ pathname: "/edit", state: { curr_post: post } }}>
-            <button> Edit</button>
+            <Button variant="link">
+              <MdCreate />
+            </Button>
           </Link>
         </Col>
       </Row>

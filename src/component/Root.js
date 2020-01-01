@@ -75,19 +75,14 @@ class Root extends Component {
                   padding: "5px"
                 }}
               >
-                <Button
-                  variant="link"
-                  style={{ color: "white", cursor: "default" }}
-                >
-                  Sort by
-                </Button>
+                <Button style={{ color: "white" }}>Sort by</Button>
 
                 <DropdownButton
                   style={{ display: "inline-block" }}
                   size="sm"
                   variant="secondary"
                   id="dropdown-item-button"
-                  title={"by" + sortHash[this.state.sortOrder]}
+                  title={sortHash[this.state.sortOrder]}
                 >
                   {Object.keys(sortHash).map(item => (
                     <Dropdown.Item
